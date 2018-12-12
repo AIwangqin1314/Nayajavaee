@@ -13,7 +13,15 @@
     <servlet-name>Houtai</servlet-name>
     <servlet-class>Main.Houtai</servlet-class>
   </servlet>
+   <servlet>
+    <servlet-name>Chaxun</servlet-name>
+    <servlet-class>Main.Chaxun</servlet-class>
+  </servlet>
   <servlet-mapping>
+    <servlet-name>Chaxun</servlet-name>
+    <url-pattern>/Chaxun</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
     <servlet-name>Houtai</servlet-name>
     <url-pattern>/Houtai</url-pattern>
   </servlet-mapping>
