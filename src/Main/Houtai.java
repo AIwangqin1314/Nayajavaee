@@ -179,7 +179,7 @@ public class Houtai extends HttpServlet {
 			
 			//java对象变成json对象
 			JSONObject jsonObject=new JSONObject();
-			jsonObject.put("id",mysql_pict_num);
+			jsonObject.put("id",jianca_gift);
 			jsonObject.put("name", "wu");
 			jsonObject.put("phone", "wu");
 			jsonObject.put("gift", "wu");
