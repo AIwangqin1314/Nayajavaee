@@ -136,7 +136,7 @@ public class Houtai extends HttpServlet {
 		}else if("twe".equals(find_phone)) {
 
 		jianca_gift=result_phone(mysql_phone);//查重
-		if(jianca_gift==0&&mysql_wish!=null) {
+		if(jianca_gift==0&&mysql_wish!=null&&mysql_phone!=null) {
 			//生产图片
 			brnum=count(mysql_BirthDay,"-");			
 			mysql_pict_num++;
@@ -164,7 +164,7 @@ public class Houtai extends HttpServlet {
         out.flush();
         out.close();
         
-		} else if(jianca_gift>0&&mysql_wish!=null){
+		} else if(jianca_gift>0&&mysql_wish!=null&&mysql_phone!=null){
 			int update_num=count(mysql_BirthDay,"-");
 			System.out.println(update_num);
 			hecheng(mysql_name,mysql_wish,jianca_gift,update_num);
