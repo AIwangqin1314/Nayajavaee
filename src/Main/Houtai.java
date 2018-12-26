@@ -143,15 +143,13 @@ public class Houtai extends HttpServlet {
 			hecheng(mysql_name,mysql_wish,mysql_pict_num,brnum);
 			adddata(mysql_name,mysql_phone,mysql_wish,mysql_strSex,mysql_BirthDay,mysql_strCardNo,mysql_pict_num);
 		
-		//count_num=result_Set(mysql_gift);
-		//
+	
 		String str=request.getQueryString();
 		System.out.println("发送get请求。。。。。。。。。。。"+request.getParameter("key")+"\n"+str);
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("content-type", "text/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-        //或:ServletOutputStream out = response.getOutputStream();
-        //但两个不要一起用!
+      
 		
 		//java对象变成json对象
 		JSONObject jsonObject=new JSONObject();
@@ -161,18 +159,36 @@ public class Houtai extends HttpServlet {
 		jsonObject.put("gift", "wu");
 		jsonObject.put("status", "ok");
 		
-//		System.out.println(jsonObject.toString());
-//		JSONArray array = new JSONArray();
-//		array.put(jsonObject);
-//		array.put(jsonObject);
-//		System.out.println(array.toString());
-      //获取json数据
-        //JSONArray array = MyUtils.getJSONArray();
-        //输出json数据
+
         out.write(jsonObject.toString());
         out.flush();
         out.close();
         
+		} else if(jianca_gift>0&&mysql_wish!=null){
+			int update_num=count(mysql_BirthDay,"-");
+			System.out.println(update_num);
+			hecheng(mysql_name,mysql_wish,jianca_gift,update_num);
+			update_msg(mysql_phone,mysql_wish,mysql_BirthDay,mysql_name);
+			//
+			String str=request.getQueryString();
+			System.out.println("发送get请求。。。。。。。。。。。"+request.getParameter("key")+"\n"+str);
+			response.setHeader("Access-Control-Allow-Origin", "*");
+			response.setHeader("content-type", "text/json; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+	       
+			
+			//java对象变成json对象
+			JSONObject jsonObject=new JSONObject();
+			jsonObject.put("id",mysql_pict_num);
+			jsonObject.put("name", "wu");
+			jsonObject.put("phone", "wu");
+			jsonObject.put("gift", "wu");
+			jsonObject.put("status", "ok");
+			
+
+	        out.write(jsonObject.toString());
+	        out.flush();
+	        out.close();
 		}else {
 			String str=request.getQueryString();
 			System.out.println("发送get请求。。。。。。。。。。。"+request.getParameter("key")+"\n"+str);
@@ -193,8 +209,8 @@ public class Houtai extends HttpServlet {
 		}
 		}
 		else 
-//		response.getWriter().append(number+"");
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		response.getWriter().append("Served at: ");
 	}
 
 	/**
@@ -456,26 +472,66 @@ public class Houtai extends HttpServlet {
 		Font font = new Font("微软雅黑", Font.PLAIN, 65);                     //水印字体
         String srcImgPath="/home/ubuntu/pic/root/ti"+brnum+".jpg"; //源图片地址
         String tarImgPath="/home/ubuntu/www/pic/ny"+num+".jpg"; //待存储的地址
-        //String srcImgPath="D:/pic/ti"+brnum+".jpg"; //源图片地址
+       // String srcImgPath="D:/pic/ti"+brnum+".jpg"; //源图片地址
        // String tarImgPath="D:/pic/ny"+num+".jpg"; //待存储的地址
         String waterMarkContent=msg;  //水印内容
         Color color=new Color(255,255,255,240);                               //水印图片色彩以及透明度
         he.addWaterMark(srcImgPath, tarImgPath,waterMarkContent ,color ,font,ming);
 	}
 //	@SuppressWarnings("finally")
-	public Integer result_Set(String gift_getmsg){
+	public void update_msg(String tel,String wish,String brithday,String name){
+		Connection con;
+		String gift_mysql=null;
+		int br_mysql=100;
+		try {
+		    //加载驱动程序
+		    Class.forName(driver);
+		    //1.getConnection()方法，连接MySQL数据库！！
+		    con = DriverManager.getConnection(url,user,password);
+		    if(!con.isClosed())
+		        System.out.println("Succeeded connecting to the Database!");
+		    Statement statement = con.createStatement();
+		    
+		    String sql="update user set wish =? ,name =? ,brithday =?  where phone= ?" ;
+		    
+		    System.out.println(sql);
+
+            PreparedStatement pst=con.prepareStatement(sql);
+
+           pst.setString(1, wish);
+           pst.setString(2, name);
+           pst.setString(3, brithday);
+           pst.setString(4, tel);
+            pst.executeUpdate();        
+            //关闭资源        
+            pst.close();
+
+		  System.out.println("更新chengg");
+		  
+		  
+		   con.close();
+		  
+		} catch(ClassNotFoundException e) {   
+			 
+		   //数据库驱动类异常处理
+		   System.out.println("Sorry,can`t find the Driver!");   
+		    e.printStackTrace();   
+		   } catch(SQLException e) {
+		   //数据库连接失败异常处理
+		    e.printStackTrace();  
+		   }catch (Exception e) {
+		// TODO: handle exception
+		    e.printStackTrace();
+		   
+		}
+		
+		
+		
+	}
+ 	public Integer result_Set(String gift_getmsg){
 		  //声明Connection对象
       Connection con;
       Integer id=0;
-     //驱动程序名
-//      String driver = "com.mysql.jdbc.Driver";
-//     //URL指向要访问的数据库名mydata
-//     String url = "jdbc:mysql://172.16.0.9:3306/nanya?sueSSL=false";
-//     //MySQL配置时的用户名
-//      String user = "root";
-//     //MySQL配置时的密码
-//     String password = "xishanNY$1215mysql";
-  //遍历查询结果集
      try {
           //加载驱动程序
           Class.forName(driver);
@@ -514,10 +570,7 @@ public class Houtai extends HttpServlet {
      // TODO: handle exception
           e.printStackTrace();
          
-    }finally{
-//           System.out.println("数据库取值成功获取！！");
-//           return id;
-      }
+    }
      System.out.println("数据库取值成功获取！！");
      return id;
 	
