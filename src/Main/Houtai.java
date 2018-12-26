@@ -81,6 +81,7 @@ public class Houtai extends HttpServlet {
 		mysql_BirthDay=request.getParameter("BirthDay");
 		mysql_strCardNo=request.getParameter("strCardNo");
 		find_phone=request.getParameter("head");
+		System.out.println(mysql_phone.length());
 		System.out.println("得到请求"+mysql_name+mysql_wish+mysql_phone+mysql_strSex+mysql_BirthDay+mysql_strCardNo+find_phone);
 		if("one".equals(find_phone)) {
 			int[] b= {0,0};
@@ -133,10 +134,10 @@ public class Houtai extends HttpServlet {
 		        out.flush();
 		        out.close();
 			}
-		}else if("twe".equals(find_phone)) {
+		}else if("twe".equals(find_phone)&&mysql_phone.length()==11) {
 
 		jianca_gift=result_phone(mysql_phone);//查重
-		if(jianca_gift==0&&mysql_wish!=null&&mysql_phone!=null) {
+		if(jianca_gift==0&&mysql_wish!=null) {
 			//生产图片
 			brnum=count(mysql_BirthDay,"-");			
 			mysql_pict_num++;
@@ -164,7 +165,7 @@ public class Houtai extends HttpServlet {
         out.flush();
         out.close();
         
-		} else if(jianca_gift>0&&mysql_wish!=null&&mysql_phone!=null){
+		} else if(jianca_gift>0&&mysql_wish!=null){
 			int update_num=count(mysql_BirthDay,"-");
 			System.out.println(update_num);
 			hecheng(mysql_name,mysql_wish,jianca_gift,update_num);
