@@ -473,8 +473,8 @@ public class Houtai extends HttpServlet {
 		Font font = new Font("微软雅黑", Font.PLAIN, 65);                     //水印字体
         String srcImgPath="/home/ubuntu/pic/root/ti"+brnum+".jpg"; //源图片地址
         String tarImgPath="/home/ubuntu/www/pic/ny"+num+".jpg"; //待存储的地址
-       // String srcImgPath="D:/pic/ti"+brnum+".jpg"; //源图片地址
-       // String tarImgPath="D:/pic/ny"+num+".jpg"; //待存储的地址
+        //String srcImgPath="D:/pic/ti"+brnum+".jpg"; //源图片地址
+        //String tarImgPath="D:/pic/ny"+num+".jpg"; //待存储的地址
         String waterMarkContent=msg;  //水印内容
         Color color=new Color(255,255,255,240);                               //水印图片色彩以及透明度
         he.addWaterMark(srcImgPath, tarImgPath,waterMarkContent ,color ,font,ming);

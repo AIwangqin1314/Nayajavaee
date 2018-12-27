@@ -34,13 +34,13 @@ import java.awt.Graphics2D;
             Font fontm = new Font("微软雅黑", Font.PLAIN, 100);   //yu         
             g.setFont(fontm); //yu
             int m = getWatermarkLength(ming, g);//centen  
-            int x = 100; //left
+            int x = 165; //left
             int y = (srcImgHeight*6)/10 ;//- 2*getWatermarkLength(waterMarkContent, g);           
             g.drawString(ming, x, y);  //画出水印
             
             FontMetrics fm = sun.font.FontDesignMetrics.getMetrics(font); 
             g.setFont(font); //yu
-            g.drawString("的新年心愿:", 100+m, y);  //画出水印
+            g.drawString("的新年心愿:", 165+m, y);  //画出水印
             
             g.drawString(waterMarkContent, (srcImgWidth-getWatermarkLength(waterMarkContent, g))/2, y+fm.getHeight()+50);  //画出水印
             g.dispose();  
