@@ -138,6 +138,7 @@ public class Houtai extends HttpServlet {
 
 		jianca_gift=result_phone(mysql_phone);//查重
 		if(jianca_gift==0&&mysql_wish!=null) {
+			int[] b= {0,0};
 			//生产图片
 			brnum=count(mysql_BirthDay,"-");			
 			mysql_pict_num++;
@@ -160,12 +161,15 @@ public class Houtai extends HttpServlet {
 		jsonObject.put("gift", "wu");
 		jsonObject.put("status", "ok");
 		
+			jsonObject.put("num", brnum);	
+		
 
         out.write(jsonObject.toString());
         out.flush();
         out.close();
         
 		} else if(jianca_gift>0&&mysql_wish!=null){
+			int[] b= {0,0};
 			int update_num=count(mysql_BirthDay,"-");
 			System.out.println(update_num);
 			hecheng(mysql_name,mysql_wish,jianca_gift,update_num);
@@ -185,8 +189,7 @@ public class Houtai extends HttpServlet {
 			jsonObject.put("phone", "wu");
 			jsonObject.put("gift", "wu");
 			jsonObject.put("status", "ok");
-			
-
+			jsonObject.put("num", update_num);	
 	        out.write(jsonObject.toString());
 	        out.flush();
 	        out.close();
